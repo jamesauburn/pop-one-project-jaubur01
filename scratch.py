@@ -1,28 +1,45 @@
+#git commit -m"...""
 
-file_name = open('city-data.txt', 'r').read()
-
-#file_name = 'Alabama\tMontgomery\t32.361538\t-86.279118\nAlaska\tJuneau\t58.301935\t-134.41974\nArizona\tPhoenix\t33.448457\t-112.073844'
-data_ = [i.split('\t') for i in file_name.split('\n')] # Convert to List of List
-for i in data_:
-    i[2:4] = [float(j) for j in i[2:4]] #Convert co-ordinated to float
-data_ = [tuple(i) for i in data_] #Convert to List of tuples
-
-
-print(data_)
+def compute_total_distance(road_map):
+    """
+    Returns, as a floating point number, the sum of the distances of all
+    the connections in the `road_map`. Remember that it's a cycle, so that
+    (for example) in the initial `road_map`, Wyoming connects to Alabama...
+    """
+    pass
 
 
-#data_ = [tuple(map(str, i.split('\t'))) for i in file_name.split('\n')]
-#x = map(lambda x: str(x), x)
-#a = tuple(i for i in list)
-#test = list(map(list, l))
+
+#import random
+
+#number_ = N * random.random()
+
+rood_ = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844)]
+
+from math import sqrt
+compute_ = rood_
+#compute = read_cities(road_map)
+#for i in compute_:
+#    for j in i:
+#        j[2]
+
+#take cordinates from first and second
+#pythogorus to compute distances
+#link as
+
+sum_ = 0
+numbers_ = [i[2:4] for i in compute__]]
+A =
+B =
+a =
+b =
+distance_ = math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
+compute_ = [i[2:4] for i in compute__]]
+for i in comput_:
 
 
-#semi_ = data_[0]
-#print(semi_)
-#b = set(int(i) for i in input().split())
-#for i in data_:
-#semi = [float(j) for j in semi_[2:]]
-#print(semi_)
-#print(data_)
 
-#print(type(semi_[2]))
+
+print(distance_)
+
+print(compute_)
