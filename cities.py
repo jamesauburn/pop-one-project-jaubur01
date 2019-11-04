@@ -32,6 +32,46 @@ def compute_total_distance(road_map):
     the connections in the `road_map`. Remember that it's a cycle, so that
     (for example) in the initial `road_map`, Wyoming connects to Alabama...
     """
+    #If you want to treat a list `lst` as circular (the first item
+    #  follows the last item), the item after `lst[i]` is not just `lst(i + 1)`,
+    #  but is `lst[(i + 1) % len(lst)]`.
+
+    rood_ = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844)]
+
+    import math
+
+    compute_ = rood_ #!!!!!!!!!!!!!!!!!!!
+    # !!!!!!!!!! compute = read_cities(road_map)
+    def pythag(A, B, a, b):
+        distance_ = math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
+        return distance_
+
+    dist_calc_ = []
+    A = 0
+    B = 0
+    a = 0
+    b = 0
+
+    for i in compute_:
+        A = i[2]
+        B = i[3]
+        print(pythag(A, B, a, b))
+        a = A
+        b = B
+
+            #a = j[2]
+            #b = j[3]
+            #print(a)
+            #print(b)
+        #dist_list.append(pythag(A, B, a, b))
+
+    #take cordinates from first and second
+    #pythogorus to compute distances
+    #return as an append to a new list
+    # for the purpose of this return a sum of the list
+    #create dict of city and distance
+
+    pass
 
 def swap_cities(road_map, index1, index2):
     """
