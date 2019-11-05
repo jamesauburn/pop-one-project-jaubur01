@@ -1,3 +1,5 @@
+import math, copy, random
+
 def read_cities(file_name):
     """
     Read in the cities from the given `file_name`, and return
@@ -9,22 +11,24 @@ def read_cities(file_name):
 
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
-
-    read_ = open('file_name').read()
-    read_ = [i.split('\t') for i in read_.split('\n')] # Convert to list of list
-    for i in read_:
+    #Do i need to add a user input for the file name?
+    #Introduce try and execept to account for user error
+    read_ = open(file_name, 'r').read() #check is read and readline makes a difference
+    road_map = [i.split('\t') for i in read_.split('\n')] # Convert to list of list
+    for i in road_map:
         i[2:4] = [float(j) for j in i[2:4]] # Convert co-ordinates to floats
-    read_ = [tuple(i) for i in read_] # Convert to list of tuples
-    return read_
+    road_map = [tuple(i) for i in road_map] # Convert to list of tuples
+    #read_.close()
+
+    return road_map
 
 def print_cities(road_map):
     """
     Prints a list of cities, along with their locations.
     Print only one or two digits after the decimal point.
     """
-    print_ = read_cities(road_map)
-    print_ = [(j[0], round((j[1]), 2), round(j[2], 2)) for j in [i[1:4] for i in print_]]
-    return print_
+    return print([(j[0], round((j[1]), 2), round(j[2], 2)) for j in [i[1:4] for i in road_map]])
+
 
 def compute_total_distance(road_map):
     """
@@ -32,46 +36,19 @@ def compute_total_distance(road_map):
     the connections in the `road_map`. Remember that it's a cycle, so that
     (for example) in the initial `road_map`, Wyoming connects to Alabama...
     """
-    #If you want to treat a list `lst` as circular (the first item
-    #  follows the last item), the item after `lst[i]` is not just `lst(i + 1)`,
-    #  but is `lst[(i + 1) % len(lst)]`.
+    compute_ = road_map
+    a = compute_[0][2]
+    b = compute_[0][3]
+    sum_ = 0
 
-    rood_ = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844)]
+    for i in range(0, len(compute_)):
+        o = compute_[(i + 1) % len(compute_)]
+        A, B = a, b
+        a, b = o[2], o[3]
+        sum_ += pythagoras(A, B, a, b)
+        print(sum)
 
-    import math
-
-    compute_ = rood_ #!!!!!!!!!!!!!!!!!!!
-    # !!!!!!!!!! compute = read_cities(road_map)
-    def pythag(A, B, a, b):
-        distance_ = math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
-        return distance_
-
-    dist_calc_ = []
-    A = 0
-    B = 0
-    a = 0
-    b = 0
-
-    for i in compute_:
-        A = i[2]
-        B = i[3]
-        print(pythag(A, B, a, b))
-        a = A
-        b = B
-
-            #a = j[2]
-            #b = j[3]
-            #print(a)
-            #print(b)
-        #dist_list.append(pythag(A, B, a, b))
-
-    #take cordinates from first and second
-    #pythogorus to compute distances
-    #return as an append to a new list
-    # for the purpose of this return a sum of the list
-    #create dict of city and distance
-
-    pass
+    return sum_ #this needs to be check to see if the output is actually correct
 
 def swap_cities(road_map, index1, index2):
     """
@@ -84,7 +61,11 @@ def swap_cities(road_map, index1, index2):
     Allow for the possibility that `index1=index2`,
     and handle this case correctly.
     """
-    pass
+    new_road_map = copy.deepcopy(road_map) # can this be copy.copy?
+    new_road_map[index1], new_road_map[index2] = new_road_map[index2], new_road_map[index1]
+    new_total_distance = compute_total_distance(new_road_map)
+    return (new_road_map, new_total_distance) #this needs to be tested
+
 
 def shift_cities(road_map):
     """
@@ -92,6 +73,10 @@ def shift_cities(road_map):
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map.
     """
+    #If you want to treat a list `lst` as circular (the first item
+    #  follows the last item), the item after `lst[i]` is not just `lst(i + 1)`,
+    #  but is `lst[(i + 1) % len(lst)]`.
+
     pass
 
 def find_best_cycle(road_map):
@@ -101,6 +86,9 @@ def find_best_cycle(road_map):
     After `10000` swaps/shifts, return the best cycle found so far.
     Use randomly generated indices for swapping.
     """
+    #index change assigned to random
+    #while n != 0 loop interating to 10000
+
     pass
 
 def print_map(road_map):
@@ -120,3 +108,14 @@ def main():
 
 if __name__ == "__main__": #keep this in
     main()
+
+def pythagoras(A, B, a, b):
+    distance_ = math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
+    return distance_
+
+###
+
+road_map = read_cities('city-data.txt')
+#print_cities(road_map)
+example_ = compute_total_distance(road_map)
+print(example_)

@@ -5,60 +5,56 @@
 #  but is `lst[(i + 1) % len(lst)]`.
 
 #import random
-
-#number_ = N * random.random()
-#    """
-#    Returns, as a floating point number, the sum of the distances of all
-#    the connections in the `road_map`. Remember that it's a cycle, so that
-#    (for example) in the initial `road_map`, Wyoming connects to Alabama...
-#
-#    #If you want to treat a list `lst` as circular (the first item
-    #  follows the last item), the item after `lst[i]` is not just `lst(i + 1)`,
-    #  but is `lst[(i + 1) % len(lst)]`.
-
-
+#for i in read_:
+    #road_map.write(read_) #needs to be check
+import copy, math
 
 
 rood_ = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844)]
+print(rood_)
 
-import math
+shift_ = rood_
 
-compute_ = rood_ #!!!!!!!!!!!!!!!!!!!
-    # !!!!!!!!!! compute = read_cities(road_map)
-def pythag(A, B, a, b):
-    distance_ = math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
-    return distance_
+#shift the index of i
+#end point going to the front
 
-a = compute_[0][2]
-b = compute_[0][3]
+for i in range(0, len(shift_)):
+    o = shift_[(i + 1) % len(shift_)]
+    o[i] = o[i]+1
 
-for x in range(0, len(compute_)):
-    o = compute_[(x + 1) % len(compute_)]
-    A, B = a, b 
-    a, b = o[2], o[3]
-    print(pythag(A, B, a, b))
-
-#for i in compute_:
-#    A = i[2]
-#    B = i[3]
-#    print(pythag(A, B, a, b))
-#    a = A
-#    b = B
-#---
-#compute_ = [('a', 'b', 'c', 'd'), ('e', 'f', 'g', 'h'), ('i', 'j', 'k', 'l')]
-#a = compute_[0][2]
-#b = compute_[0][3]
-#s = len(compute_)
+print(shift_)
 
 
 
-            #a = j[2]
-            #b = j[3]
-            #print(a)
-            #print(b)
-        #dist_list.append(pythag(A, B, a, b))
 
-    #take cordinates from first and second
-    #pythogorus to compute distances
-    #return as an append to a new list
-    # for the purpose of this return a sum of the list
+
+
+f string
+for sustituation
+formart = f"This is a {value} string"
+
+
+ #to be added to the user input file name. Import to add to debug
+exceptions
+input_ = input('Enter: ')
+try:
+    infile = open(file_name, 'r')
+    line = infile.readline()
+    while line !='':
+            print(line.rstrip())
+            line = infile.readline())
+except: FileNotFoundError:
+    print('The file name you have enetered does not exist. :(')
+    end
+---
+others to check
+that indexes are within the rangeof the data set
+chexk that all digits entered are positive
+check that
+    'except Exceptions as e:
+        print('You have an error: 'e)'
+Do i need to add a check and balance for the square root function
+    can use raise to rasie an exception
+finally catches all other errors. If by itself use except:
+
+"""
