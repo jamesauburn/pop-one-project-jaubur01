@@ -1,28 +1,19 @@
+"""
 
+need to prove robusness of program
+need to produce visualisation
+
+
+"""
 #for i in read_:
     #road_map.write(read_) #needs to be check if required
-import copy, math, random
+import copy, math, random, pdp
 from collections import deque
 
+pdb.run('cities.py')
+#rood_ = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844), ('Rlabama', 'Bontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118)]
 
-rood_ = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844), ('Rlabama', 'Bontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118)]
 
-
-"""
-    Using a combination of `swap_cities` and `shift_cities`,
-    try `10000` swaps/shifts, and each time keep the best cycle found so far.
-    After `10000` swaps/shifts, return the best cycle found so far.
-    Use randomly generated indices for swapping.
-"""
-
-road_map = rood_
-new_road_map = rood_
-
-road_map[-1:].append(road_map[:-1])
-new_road_map = new_road_map.append(new_road_map.pop(0))
-
-print(road_map)
-print(new_road_map)
 
 
 """

@@ -1,5 +1,5 @@
 import math, copy, random
-from collections import deque
+#from collections import deque
 
 def read_cities(file_name):
     """
@@ -11,6 +11,16 @@ def read_cities(file_name):
     Use this as your initial `road_map`, that is, the cycle
 
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
+    """
+    """
+    understand what can be input into the function.
+        impliment solid method of cleaning and sorting the files
+    need to add at least 5 tests for each function that needs to be tested.
+
+        strip the ends using rstrip
+        break down into \n and \t
+        convert to list of tuples
+        try accept criteria to accept is the data is input correctly.
     """
     #consider using rstrip
     #Do i need to add a user input for the file name?
@@ -126,35 +136,69 @@ def print_map(road_map):
     their connections, along with the cost for each connection
     and the total cost.
     """
+    #what is the cost?
+
     pass
+
+def pass_criteria(file_name):
+
+    #should this be done in the openfile location. should it require the user to inclue the file exension.
+    try:
+        read_ = open(file_name, 'r').read()
+    except FileNotFoundError:
+        print('This file cannot be found.')
+        return False
+
+    if not file_name.endswith('.txt'):
+        print('Your file extension needs to be a .txt file. Please include this in your ')
+        print('Please enter the file name: ', end="")
+        return False
+    elif len(read_) == 0:
+        print('This file contains no data')
+        read.close()
+        return False
+    else:
+        return True
+
+    """
+    is it a .txt. if not add .txt
+    does it contain anything?
+    does it contain the correct format
+    pass
+    """
+    pass
+
+def pythagoras(A, B, a, b):
+    return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
 
 def main():
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
     """
+    print('Traveling Salesman - James Auburn - 13168179 - PoP Term 1 Project')
+    valid_input = False # can this been removed?
+    while valid_input == False:
+        print('Please enter the name of your file: ', end="")
+        file_name = str(input())
+        valid_input = pass_criteria(file_name)
+
+    #road_map = read_cities(file_name)
+    #print(road_map)
+    #print_cities(road_map)
+    #print(road_map)
+    #print(compute_total_distance(road_map))
+    #print(road_map)
+    #object_ = swap_cities(road_map, 0, -1)
+    #print(swap_cities(road_map, -1, -1))
+    #print(object_[1])
+    #print(road_map)
+    #print(shift_cities(road_map))
+    #print(type(road_map))
+    #print(find_best_cycle(road_map))
+    #print(example_)
+
     pass
 
 if __name__ == "__main__": #keep this in
     main()
-
-def pythagoras(A, B, a, b):
-    distance_ = math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
-    return distance_
-
-###
-
-road_map = read_cities('city-data.txt')
-#print(road_map)
-#print_cities(road_map)
-#print(road_map)
-print(compute_total_distance(road_map))
-#print(road_map)
-#object_ = swap_cities(road_map, 0, -1)
-#print(swap_cities(road_map, 0, -1))
-#print(object_[1])
-#print(road_map)
-#print(shift_cities(road_map))
-#print(type(road_map))
-print(find_best_cycle(road_map))
-#print(example_)
