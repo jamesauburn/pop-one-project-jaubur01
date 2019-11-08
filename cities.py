@@ -30,8 +30,7 @@ def read_cities(file_name):
     for i in road_map_split:
         i[2:4] = [float(j) for j in i[2:4]] # Convert co-ordinates to floats
     road_map_tuple = [tuple(i) for i in road_map_split] # Convert to list of tuples
-    #read_.close()
-
+    #do i need to close the file?
     return road_map_tuple
 
 def print_cities(road_map):
@@ -73,14 +72,10 @@ def swap_cities(road_map, index1, index2):
     Allow for the possibility that `index1=index2`,
     and handle this case correctly.
     """
-    new_road_map = copy.copy(road_map) # can this be copy.copy?
-    try:
-        new_road_map[index1], new_road_map[index2] = new_road_map[index2], new_road_map[index1]
-        new_total_distance = compute_total_distance(new_road_map)
-        return new_road_map, new_total_distance #this needs to be tested
-    except IndexError:
-        return 'The index provided is out of range' #is the return feature correct
-
+    new_road_map = copy.copy(road_map) # can this be copy.copy copy.deepcopy
+    new_road_map[index1], new_road_map[index2] = new_road_map[index2], new_road_map[index1]
+    new_total_distance = compute_total_distance(new_road_map)
+    return (new_road_map, new_total_distance) #this needs to be tested
         #does this need to be printed or return. The objext is being computed therefore will need to be a new list.
 
 def shift_cities(road_map):
@@ -88,20 +83,6 @@ def shift_cities(road_map):
     For every index i in the `road_map`, the city at the position i moves
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map.
-    """
-    """
-    #deque method
-    shift_ = deque(road_map)
-    shift_.rotate(1)
-    return shift_
-    """
-    """
-    new_road_map = copy.deepcopy(road_map) # is this necessary?
-    count_ = len(new_road_map) - 1
-    while count_ != 0:
-        new_road_map.append(new_road_map.pop(0))
-        count_ -= 1
-    return new_road_map #This needs to be inestigated to see if it is appropriate.
     """
     road_map.insert(0, road_map[-1])
     road_map.pop()
@@ -115,19 +96,22 @@ def find_best_cycle(road_map):
     Use randomly generated indices for swapping.
     """
     best_ = math.inf
+    hold_ = None
     itter_ = 10000
 
     while itter_ != 0:
         num_ = random.randint(0, len(road_map)-1)
-        num_2 = random.randint(0, len(road_map)-1)
-        swapped_ = swap_cities(road_map, num_, num_2) #this can rewriten into one when take is compleet
-        shifted_ = shift_cities(swapped_[0])
-        dist_new = compute_total_distance(shifted_)
-        if dist_new < best_:
-            best_ = dist_new
+        num_2 = random.randint(0, len(road_map)-1) # need to utalise the output from swap citired, not redo the caluclation
+        shifted_ = shift_cities(road_map)
+        swapped_ = swap_cities(shifted_, num_, num_2)
+
+        if swapped_[1] < best_:
+            best_ = swapped_[1]
+            hold_ = copy.copy(swapped_[0]) #working - shifted_
         itter_ -= 1
 
-    return best_
+    return print_cities(hold_)
+    #return best_ #this is not correct. I need to return the best route.
 
 
 def print_map(road_map):
@@ -137,6 +121,15 @@ def print_map(road_map):
     and the total cost.
     """
     #what is the cost?
+    lst = list()
+    for i in road_map:
+        lst.append(road_map[i][2])
+
+    """
+
+    print all coordinates on a grip and label accordingly.
+    plot the route prior to the analysis and a plot for after.
+    """
 
     pass
 
@@ -150,26 +143,25 @@ def pass_criteria(file_name):
         return False
 
     if not file_name.endswith('.txt'):
-        print('Your file extension needs to be a .txt file. Please include this in your ')
+        print('Your file extension needs to be .txt.')
         print('Please enter the file name: ', end="")
         return False
     elif len(read_) == 0:
-        print('This file contains no data')
-        read.close()
+        print('This file contains no data.')
         return False
     else:
         return True
 
-    """
-    is it a .txt. if not add .txt
-    does it contain anything?
-    does it contain the correct format
-    pass
-    """
-    pass
+    #!!! to add to tests
+    #strip '' from either side?
+    #
 
 def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
+
+def visulisation(road_map):
+
+
 
 def main():
     """
@@ -177,28 +169,16 @@ def main():
     cycle and prints it out.
     """
     print('Traveling Salesman - James Auburn - 13168179 - PoP Term 1 Project')
-    valid_input = False # can this been removed?
+    valid_input = False
     while valid_input == False:
         print('Please enter the name of your file: ', end="")
-        file_name = str(input())
+        file_name = input()
         valid_input = pass_criteria(file_name)
 
-    #road_map = read_cities(file_name)
-    #print(road_map)
-    #print_cities(road_map)
-    #print(road_map)
-    #print(compute_total_distance(road_map))
-    #print(road_map)
-    #object_ = swap_cities(road_map, 0, -1)
-    #print(swap_cities(road_map, -1, -1))
-    #print(object_[1])
-    #print(road_map)
-    #print(shift_cities(road_map))
-    #print(type(road_map))
-    #print(find_best_cycle(road_map))
-    #print(example_)
+    road_map = read_cities(file_name)
+    print_map(road_map)
+    #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
 
-    pass
 
 if __name__ == "__main__": #keep this in
     main()
