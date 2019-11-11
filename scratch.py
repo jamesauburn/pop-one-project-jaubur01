@@ -9,42 +9,38 @@ computational functions you might write.
     #road_map.write(read_) #needs to be check if required
 
 import copy, math, random
-from tkinter import *
-from tkinter.ttk import Progressbar
+import tkinter as tk
 
-#rood_ = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844), ('Rlabama', 'Bontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118)]
-
-def clicked():
-    res_ = 'Welcome to ' +txt_1.focus()
-    lbl_1.configure(text= res_)
+road_map = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844), ('Rlabama', 'Bontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118)]
 
 
-window_ = Tk()
-window_.geometry('400x400')
+
+
+"""
+window_ = tk.Tk()
+window_.geometry('1000x400')
 window_.title('Traveling Salesman.')
 
 
-lbl_0 = Label(window_, text='James Auburn', font=('Helvetica', 16, 'bold')).grid(column=0, row=0)
-lbl_0 = Label(window_, text='ID : 13168179', font=('Helvetica', 16, 'bold')).grid(column=1, row=0)
+lbl_0 = tk.Label(window_, text='James Auburn', font=('Helvetica', 16, 'bold')).grid(column=0, row=0)
+lbl_0 = tk.Label(window_, text='ID : 13168179', font=('Helvetica', 16, 'bold')).grid(column=1, row=0)
 
-lbl_1 = Label(window_, text='Enter your file name:', font=('Helvetica', 12)).grid(column=0, row=2)
-txt_1 = Entry(window_, width=10).grid(column=1, row=2)
-btn_1 = Button(window_, text='Submit.', font=('Helvetica', 12), command=clicked).grid(column=2, row=2) #This button isnt working.
+lbl_1 = tk.Label(window_, text='Enter your file name:', font=('Helvetica', 12)).grid(column=0, row=2)
+txt_1 = tk.Entry(window_, width=10).grid(column=1, row=2)
+def clicked():
+    lbl_1.configure(text= txt_1.get()).grid(column=0, row=6)
+btn_1 = tk.Button(window_, text='Submit.', font=('Helvetica', 12), command=clicked).grid(column=2, row=2) #This button isnt working.
 #lbl_pass = Label(window_, text='fail.').grid(column=3, row=1)
 #lbl_fail = Label(window_, text='pass.').grid(column=3, row=2)
 
-lbl_3 = Label(window_, text='Find best route.', font=('Helvetica', 12)).grid(column=0, row=3)
-btn_2 = Button(window_, text='Route', font=('Helvetica', 12), command=clicked).grid(column=1, row=3)
+lbl_3 = tk.Label(window_, text='Find best route.', font=('Helvetica', 12)).grid(column=0, row=3)
+btn_2 = tk.Button(window_, text='Route', font=('Helvetica', 12), command=clicked).grid(column=1, row=3)
 
 #create progress bar for itterations
-
-style_ = ttk.Style()
-style_.configure('black.Horazontal.TProgressbar', blackground='black')
-bar_ = Progressbar(window_, length='200', style='black.Horazontal.TProgressbar').grid(column=0, row=6)
-bar_['value'] = 100
-bar_.grid(column=0, row=0)
-
 window_.mainloop()
+"""
+
+
 """
 import tkinter as tk
 

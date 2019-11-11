@@ -38,10 +38,25 @@ def print_cities(road_map):
     Prints a list of cities, along with their locations.
     Print only one or two digits after the decimal point.
     """
+    """
+    return print([(j[0], round(j[1], 2), round(j[2], 2)) for j in [i[1:4] for i in road_map]]) # this si still incorrect.
+    #this needs to be printed in a nicer format. 1 entry per line ect and without brackets.
+    #low3 = '\n'.join(low2)
+    """
+    hold_=[(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
 
-    return print([(j[0], round((j[1]), 2), round(j[2], 2)) for j in [i[1:4] for i in road_map]])
+    new_list = ''
+    for i in hold_:
+        new_list += make_ten(i[0]) + '\t' + str(i[1]) + '\t' + str(i[2]) + '\n'
 
+    return print(new_list)
 
+def make_ten(i): # use this to print in a pleasant format.
+    if len(i) > 10:
+        return i
+    else:
+        return make_ten(i + ' ')
+        
 def compute_total_distance(road_map):
     """
     Returns, as a floating point number, the sum of the distances of all
@@ -110,7 +125,7 @@ def find_best_cycle(road_map):
             hold_ = copy.copy(swapped_[0]) #working - shifted_
         itter_ -= 1
 
-    return print_cities(hold_)
+    return hold_
     #return best_ #this is not correct. I need to return the best route.
 
 
@@ -121,9 +136,9 @@ def print_map(road_map):
     and the total cost.
     """
     #what is the cost?
-    lst = list()
-    for i in road_map:
-        lst.append(road_map[i][2])
+    #lst = list()
+    #for i in road_map:
+    #    lst.append(road_map[i][2])
 
     """
 
@@ -161,7 +176,7 @@ def pythagoras(A, B, a, b):
 
 def visulisation(road_map):
 
-
+    pass
 
 def main():
     """
@@ -176,9 +191,13 @@ def main():
         valid_input = pass_criteria(file_name)
 
     road_map = read_cities(file_name)
+    print_cities(road_map) #needs imporvement
+    print_cities(find_best_cycle(road_map))
     print_map(road_map)
-    #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
 
+    #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
 
 if __name__ == "__main__": #keep this in
     main()
+
+
