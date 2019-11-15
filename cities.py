@@ -1,5 +1,4 @@
 import math, copy, random
-#from collections import deque
 
 def read_cities(file_name):
     """
@@ -12,25 +11,13 @@ def read_cities(file_name):
 
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
-    """
-    understand what can be input into the function.
-        impliment solid method of cleaning and sorting the files
-    need to add at least 5 tests for each function that needs to be tested.
-
-        strip the ends using rstrip
-        break down into \n and \t
-        convert to list of tuples
-        try accept criteria to accept is the data is input correctly.
-    """
-    #consider using rstrip
-    #Do i need to add a user input for the file name?
-    #Introduce try and execept to account for user error
-    read_ = open(file_name, 'r').read() #check is read and readline makes a difference
-    road_map_split = [i.split('\t') for i in read_.split('\n')] # Convert to list of list
-    for i in road_map_split:
-        i[2:4] = [float(j) for j in i[2:4]] # Convert co-ordinates to floats
-    road_map_tuple = [tuple(i) for i in road_map_split] # Convert to list of tuples
-    #do i need to close the file?
+    
+    read_ = open(file_name, 'r').read()
+    read_.strip()
+    road_map_split = [i.split('\t') for i in read_.split('\n')]
+    road_map_float = [(j[0], j[1], float(j[2]), float(j[3])) for j in road_map_split]
+    road_map_tuple = [tuple(i) for i in road_map_float]
+    
     return road_map_tuple
 
 def print_cities(road_map):
@@ -38,32 +25,21 @@ def print_cities(road_map):
     Prints a list of cities, along with their locations.
     Print only one or two digits after the decimal point.
     """
-    """
-    return print([(j[0], round(j[1], 2), round(j[2], 2)) for j in [i[1:4] for i in road_map]]) # this si still incorrect.
-    #this needs to be printed in a nicer format. 1 entry per line ect and without brackets.
-    #low3 = '\n'.join(low2)
-    """
-    hold_=[(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
+    hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
 
-    new_list = ''
+    new_ = 'City\t\t\t\t\tLat\tLong\n' # can this be move to print_cities?
     for i in hold_:
-        new_list += make_ten(i[0]) + '\t' + str(i[1]) + '\t' + str(i[2]) + '\n'
+        new_ += make_long(i[0]) + '\t' + str(i[1]) + '\t' + str(i[2]) + '\n'
 
-    return print(new_list)
+    return print(new_)
 
-def make_ten(i): # use this to print in a pleasant format.
-    if len(i) > 10:
-        return i
-    else:
-        return make_ten(i + ' ')
-        
+
 def compute_total_distance(road_map):
     """
     Returns, as a floating point number, the sum of the distances of all
     the connections in the `road_map`. Remember that it's a cycle, so that
     (for example) in the initial `road_map`, Wyoming connects to Alabama...
     """
-
     a = road_map[0][2]
     b = road_map[0][3]
     sum_ = 0
@@ -74,7 +50,7 @@ def compute_total_distance(road_map):
         a, b = next_[2], next_[3]
         sum_ += pythagoras(A, B, a, b)
 
-    return sum_ #this needs to be check to see if the output is actually correct
+    return sum_ 
 
 def swap_cities(road_map, index1, index2):
     """
@@ -87,11 +63,12 @@ def swap_cities(road_map, index1, index2):
     Allow for the possibility that `index1=index2`,
     and handle this case correctly.
     """
-    new_road_map = copy.copy(road_map) # can this be copy.copy copy.deepcopy
-    new_road_map[index1], new_road_map[index2] = new_road_map[index2], new_road_map[index1]
-    new_total_distance = compute_total_distance(new_road_map)
-    return (new_road_map, new_total_distance) #this needs to be tested
-        #does this need to be printed or return. The objext is being computed therefore will need to be a new list.
+    road_ = copy.copy(road_map) #This copy is necessary
+    road_[index1], road_[index2] = road_[index2], road_[index1]
+    new_total_distance = compute_total_distance(road_)
+
+    return (road_, new_total_distance) #this needs to be tested (not sure what)
+       
 
 def shift_cities(road_map):
     """
@@ -99,8 +76,10 @@ def shift_cities(road_map):
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map.
     """
+    #is is neccessary to not return the same variable?
     road_map.insert(0, road_map[-1])
     road_map.pop()
+
     return road_map
 
 def find_best_cycle(road_map):
@@ -116,17 +95,16 @@ def find_best_cycle(road_map):
 
     while itter_ != 0:
         num_ = random.randint(0, len(road_map)-1)
-        num_2 = random.randint(0, len(road_map)-1) # need to utalise the output from swap citired, not redo the caluclation
+        num_2 = random.randint(0, len(road_map)-1)
         shifted_ = shift_cities(road_map)
         swapped_ = swap_cities(shifted_, num_, num_2)
 
         if swapped_[1] < best_:
             best_ = swapped_[1]
-            hold_ = copy.copy(swapped_[0]) #working - shifted_
+            hold_ = copy.copy(swapped_[0]) #does this need to be copy.copy
         itter_ -= 1
 
     return hold_
-    #return best_ #this is not correct. I need to return the best route.
 
 
 def print_map(road_map):
@@ -135,22 +113,27 @@ def print_map(road_map):
     their connections, along with the cost for each connection
     and the total cost.
     """
-    #what is the cost?
+    #what is the cost? the ditance?
+    #can this be in a plot format?
     #lst = list()
     #for i in road_map:
     #    lst.append(road_map[i][2])
 
+    hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
+    
+    new_ = 'City\t\t\t\t\tLat\tLong\tCost\n'
+    for i in range(0, len(hold_)):
+        next_ = hold_[(i + 1) % len(hold_)]
+        new_ += make_long(hold_[i][0] + ' -> ' + next_[0]) + '\t' + str(hold_[i][1]) + '\t' + str(hold_[i][2]) + '\t' + str(round(pythagoras(hold_[i][1], hold_[i][2], 0, 0), 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
+    #!!!the cost is not calculated correctly!!!
+    #!!!there is still not total cost function!!!
+    return print(new_)
     """
-
     print all coordinates on a grip and label accordingly.
     plot the route prior to the analysis and a plot for after.
     """
 
-    pass
-
 def pass_criteria(file_name):
-
-    #should this be done in the openfile location. should it require the user to inclue the file exension.
     try:
         read_ = open(file_name, 'r').read()
     except FileNotFoundError:
@@ -158,8 +141,7 @@ def pass_criteria(file_name):
         return False
 
     if not file_name.endswith('.txt'):
-        print('Your file extension needs to be .txt.')
-        print('Please enter the file name: ', end="")
+        print("Your file extension needs to be '.txt'.")
         return False
     elif len(read_) == 0:
         print('This file contains no data.')
@@ -167,12 +149,15 @@ def pass_criteria(file_name):
     else:
         return True
 
-    #!!! to add to tests
-    #strip '' from either side?
-    #
 
 def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
+
+def make_long(i): # use this to print in a pleasant format.
+    if len(i) > 32:
+        return i
+    else:
+        return make_long(i + ' ')
 
 def visulisation(road_map):
 
@@ -186,15 +171,14 @@ def main():
     print('Traveling Salesman - James Auburn - 13168179 - PoP Term 1 Project')
     valid_input = False
     while valid_input == False:
-        print('Please enter the name of your file: ', end="")
+        print('Please enter the name of your file (include file extension): ', end="")
         file_name = input()
         valid_input = pass_criteria(file_name)
 
     road_map = read_cities(file_name)
-    print_cities(road_map) #needs imporvement
-    print_cities(find_best_cycle(road_map))
+    print_cities(road_map)
+    #print_cities(find_best_cycle(road_map)) #this need to be updated to use print_map
     print_map(road_map)
-
     #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
 
 if __name__ == "__main__": #keep this in
