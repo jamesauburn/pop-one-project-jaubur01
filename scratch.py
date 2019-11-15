@@ -5,8 +5,8 @@
 import copy, math, random
 import tkinter as tk
 
-road_map = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844), ('Rlabama', 'Bontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118)]
-
+#road_map = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844), ('Rlabama', 'Bontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118)]
+road_map = [('A', 'a', 0, 0), ('B', 'b', 3, 4), ('C', 'c', 0, 0), ('D', 'd', 3, 4)]
 def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
 
@@ -22,20 +22,10 @@ def print_map(road_map):
     hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
     print(hold_)
     
-    new_ = 'City\t\t\t\t\tLat\tLong\tCost\n' # can this be move to print_cities?
+    new_ = 'City\t\t\t\t\tCost\n---------------------------------------------\n' # can this be move to print_cities?
     for i in range(0, len(hold_)):
         next_ = hold_[(i + 1) % len(hold_)]
-        new_ += make_long(hold_[i][0] + ' -> ' + next_[0]) + '\t' + str(hold_[i][1]) + '\t' + str(hold_[i][2]) + '\t' + str(round(pythagoras(hold_[i][1], hold_[i][2], 0, 0), 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
-    
-    """
-    #make loop to make format  x -> Y x y cost
-    for i in range(0, len(road_map)):
-        next_ = road_map[(i + 1) % len(road_map)]
-        A, B = a, b
-        a, b = next_[2], next_[3]
-        sum_ += pythagoras(A, B, a, b)
-    """
-    
+        new_ += make_long(hold_[i][0] + ' -> ' + next_[0]) + '\t|' + str(round(pythagoras(hold_[i][1], hold_[i][2], next_[1], next_[2]), 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
     
     return new_
 

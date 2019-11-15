@@ -27,9 +27,9 @@ def print_cities(road_map):
     """
     hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
 
-    new_ = 'City\t\t\t\t\tLat\tLong\n' # can this be move to print_cities?
+    new_ = 'City\t\t\t| Lat\t| Long\n-----------------------------------------\n' # can this be move to print_cities?
     for i in hold_:
-        new_ += make_long(i[0]) + '\t' + str(i[1]) + '\t' + str(i[2]) + '\n'
+        new_ += make_long(i[0], 16) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
 
     return print(new_)
 
@@ -115,17 +115,17 @@ def print_map(road_map):
     """
     #what is the cost? the ditance?
     #can this be in a plot format?
-    #lst = list()
-    #for i in road_map:
-    #    lst.append(road_map[i][2])
 
     hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
-    
-    new_ = 'City\t\t\t\t\tLat\tLong\tCost\n'
+    total_ = 0
+    div_ = '\n-----------------------------------------------\n'
+    new_ = 'City\t\t\t\t\t| Cost' + div_
     for i in range(0, len(hold_)):
         next_ = hold_[(i + 1) % len(hold_)]
-        new_ += make_long(hold_[i][0] + ' -> ' + next_[0]) + '\t' + str(hold_[i][1]) + '\t' + str(hold_[i][2]) + '\t' + str(round(pythagoras(hold_[i][1], hold_[i][2], 0, 0), 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
-    #!!!the cost is not calculated correctly!!!
+        cost_ = pythagoras(hold_[i][1], hold_[i][2], next_[1], next_[2])
+        new_ += make_long(hold_[i][0] + ' -> ' + next_[0], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
+        total_ += cost_
+    new_ += div_ + 'The total cost is ' + str(total_) + div_
     #!!!there is still not total cost function!!!
     return print(new_)
     """
@@ -153,11 +153,11 @@ def pass_criteria(file_name):
 def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
 
-def make_long(i): # use this to print in a pleasant format.
-    if len(i) > 32:
+def make_long(i, j): # use this to print in a aethetic format.
+    if len(i) > j:
         return i
     else:
-        return make_long(i + ' ')
+        return make_long(i + ' ', j)
 
 def visulisation(road_map):
 
