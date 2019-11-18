@@ -17,7 +17,7 @@ def read_cities(file_name):
     road_map_split = [i.split('\t') for i in read_.split('\n')]
     road_map_float = [(j[0], j[1], float(j[2]), float(j[3])) for j in road_map_split]
     road_map_tuple = [tuple(i) for i in road_map_float]
-    
+
     return road_map_tuple
 
 def print_cities(road_map):
@@ -115,18 +115,18 @@ def print_map(road_map):
     """
     #what is the cost? the ditance?
     #can this be in a plot format?
-
-    hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
+    print(road_map)
     total_ = 0
     div_ = '\n-----------------------------------------------\n'
-    new_ = 'City\t\t\t\t\t| Cost' + div_
-    for i in range(0, len(hold_)):
-        next_ = hold_[(i + 1) % len(hold_)]
-        cost_ = pythagoras(hold_[i][1], hold_[i][2], next_[1], next_[2])
-        new_ += make_long(hold_[i][0] + ' -> ' + next_[0], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
+    new_ = 'City Connection\t\t\t\t| Cost' + div_
+
+    for i in range(0, len(road_map)):
+        next_ = road_map[(i + 1) % len(road_map)]
+        cost_ = pythagoras(road_map[i][2], road_map[i][3], next_[2], next_[3])
+        new_ += make_long(road_map[i][1] + ' -> ' + next_[1], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
         total_ += cost_
-    new_ += div_ + 'The total cost is ' + str(total_) + div_
-    #!!!there is still not total cost function!!!
+    new_ += div_ + 'The total cost is ' + str(round(total_,1 )) + div_
+
     return print(new_)
     """
     print all coordinates on a grip and label accordingly.
@@ -177,8 +177,8 @@ def main():
 
     road_map = read_cities(file_name)
     print_cities(road_map)
-    #print_cities(find_best_cycle(road_map)) #this need to be updated to use print_map
-    print_map(road_map)
+    #print_cities(find_best_cycle(road_map)) #is this required?
+    print_map(find_best_cycle(road_map))
     #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
 
 if __name__ == "__main__": #keep this in

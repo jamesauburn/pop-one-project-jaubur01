@@ -26,28 +26,31 @@ def test_compute_total_distance():
 
         #using the firgure above test the output fuctions correctly.
     #remenber not to compare floats.
-    assert float(computer_total_distance(???)) = float()
+    #assert float(computer_total_distance(???)) = float()
 
 def test_swap_cities():
-    assert 
+    pass
 
 def test_shift_cities():
-    road_map1 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
+    road_map2 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755),\
                 ("Minnesota", "Saint Paul", 44.95, -93.094)]
+    road_map3 = [("Minnesota", "Saint Paul", 44.95, -93.094),\
+                ("Kentucky", "Frankfort", 38.197274, -84.86311),\
+                ("Delaware", "Dover", 39.161921, -75.526755)]
     
-    assert shift_cities(road_map1[0][0] == road_map1[1][0])
+    assert road_map3 == shift_cities(road_map2)
 
 def test_compute_total_distance():
     road_map2 = [('a', 'a', 0, 0), ('a', 'a', 3, 4), ('a', 'a', 0, 0), ('a', 'a', 3, 4)]
+    
     assert compute_total_distance(road_map2) == 20
 
-
-def test_pythag():
-    assert pythag(2, 3) == 4
+def test_pythagoras():
+    assert pythagoras(3, 4, 0, 0) == 5
 """
 include test for all moduals that have been added.
-"""
+
 def test_main():
     #DO NOT TEST
 def test_read_cities():
@@ -58,7 +61,7 @@ def test_print_map():
     #DO NOT TEST
 def test_find_best_cycle():
     #DO NOT TEST
-    
+"""
 
 
 '''
