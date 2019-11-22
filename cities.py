@@ -1,5 +1,5 @@
 import math, copy, random
-import sys, time
+
 
 def read_cities(file_name):
     """
@@ -28,9 +28,9 @@ def print_cities(road_map):
     """
     hold_ = [(j[0], round(j[2], 1), round(j[3], 1)) for j in road_map] ##!!!!cheange this back to cities, not states
 
-    new_ = 'City\t\t\t| Lat\t| Long\n-----------------------------------------\n' # can this be move to print_cities?
+    new_ = 'City Location\t\t\t| Lat\t| Long\n-----------------------------------------\n' # can this be move to print_cities?
     for i in hold_:
-        new_ += make_long(i[0], 16) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
+        new_ += make_long(i[0], 24) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
 
     return print(new_)
 
@@ -164,6 +164,14 @@ def visulisation(road_map):
 
     road_map_rounded = [(j[0], j[1], round(j[2]), round(j[3])) for j in road_map]
 
+    if len(road_map_rounded) < 10:
+        tot_ = 1
+    elif len(road_map_rounded) < 10:
+        tot_ = 2
+    elif len(road_map_rounded) < 10:
+        tot_ = 3
+
+
     x = []
     y = []
 
@@ -171,23 +179,26 @@ def visulisation(road_map):
         x.append(round(i[2]))
         y.append(round(i[3]))
 
-    #print('Lat. min: ', min(x))
-    #print('Lat. max: ', max(x))
-    #print('Long min: ', min(y))
-    #rint('Long max: ', max(y))
+    print('     ', end='')
+    for j in range(min(y), max(y)+1, 2):
+        print(make_long(str(j), 4), end='|')
+    print('\n____|', end='')
+    for j in range(min(y), max(y)+1, 2):
+        print('_^|__|', end='')
+    print('\n', end='')
 
-    for i in range(max(x), min(x)-1, -1): # lat   = +/- 90     = x     = +90 -> -90
-        for j in range(min(y), max(y)+1): # long  = -/+ 180    = y     = -180 -> 180
+    for i in range(max(x), min(x)-1, -1):   # lat   = +/- 90     = x     = +90 -> -90
+        print(make_long(str(i), 2), '|', end='')
+        for j in range(min(y), max(y)+1):   # long  = -/+ 180    = y     = -180 -> 180
             for p, q in enumerate(road_map_rounded):
                 if i == q[2] and j == q[3]:
-                    hold_ =  p + 1#index(q) #the index of road_map list #can i utalise make_long? to make everything 2 digits.
-                    #print(hold_,end='')
+                    hold_ = make_long(str(p + 1), 1) + '|'
                     break
                 else:
-                    hold_ = '..'
-            print(hold_,  end='')
-        print()
-
+                    hold_ = '__|'
+            print(hold_, end='')
+        print('__|')
+#city-data.txt
     return
 
 def main():
@@ -204,13 +215,15 @@ def main():
         valid_input = pass_criteria(file_name)
 
     road_map = read_cities(file_name)
-    #print_cities(road_map)
-    #print_cities(find_best_cycle(road_map)) #is this required?
+    best_road_map = find_best_cycle(road_map)
+    print_cities(road_map)
+    print_cities(best_road_map)
     print_map(road_map)
-    print_map(find_best_cycle(road_map))
-    #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
+    print_map(best_road_map)
     visulisation(road_map)
-    visulisation(find_best_cycle(road_map))
+    visulisation(best_road_map)
+
+    print('|', '\t', '|', '\t','|', '\t','|', '\t')
 
 if __name__ == "__main__": #keep this in
     main()
