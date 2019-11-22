@@ -15,22 +15,22 @@ def read_cities(file_name):
 
     read_ = open(file_name, 'r').read()
     read_.strip()
-    road_map_split = [i.split('\t') for i in read_.split('\n')]
-    road_map_float = [(j[0], j[1], float(j[2]), float(j[3])) for j in road_map_split]
-    road_map_tuple = [tuple(i) for i in road_map_float]
+    road_map = [i.split('\t') for i in read_.split('\n')]
+    road_map = [(j[0], j[1], float(j[2]), float(j[3])) for j in road_map]
+    road_map = [tuple(i) for i in road_map]
 
-    return road_map_tuple
+    return road_map
 
 def print_cities(road_map):
     """
     Prints a list of cities, along with their locations.
     Print only one or two digits after the decimal point.
     """
-    hold_ = [(j[0], round(j[2], 1), round(j[3], 1)) for j in road_map]
+    hold_ = [(j[0], round(j[2], 1), round(j[3], 1)) for j in road_map] ##!!!!cheange this back to cities, not states
 
     new_ = 'City\t\t\t| Lat\t| Long\n-----------------------------------------\n' # can this be move to print_cities?
     for i in hold_:
-        new_ += make_long(i[1], 16) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
+        new_ += make_long(i[0], 16) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
 
     return print(new_)
 
@@ -64,11 +64,11 @@ def swap_cities(road_map, index1, index2):
     Allow for the possibility that `index1=index2`,
     and handle this case correctly.
     """
-    road_ = copy.copy(road_map) #This copy is necessary
-    road_[index1], road_[index2] = road_[index2], road_[index1]
-    new_total_distance = compute_total_distance(road_)
+    road_map_swap = copy.copy(road_map) #This copy is necessary
+    road_map_swap[index1], road_map_swap[index2] = road_map_swap[index2], road_map_swap[index1]
+    new_total_distance = compute_total_distance(road_map_swap)
 
-    return (road_, new_total_distance) #this needs to be tested (not sure what)
+    return (road_map_swap, new_total_distance) #this needs to be tested (not sure what)
 
 
 def shift_cities(road_map):
@@ -78,10 +78,11 @@ def shift_cities(road_map):
     0. Return the new road map.
     """
     #is is neccessary to not return the same variable?
-    road_map.insert(0, road_map[-1])
-    road_map.pop()
+    road_map_shift = copy.copy(road_map)
+    road_map_shift.insert(0, road_map_shift[-1])
+    road_map_shift.pop()
 
-    return road_map
+    return road_map_shift
 
 def find_best_cycle(road_map):
     """
@@ -91,39 +92,21 @@ def find_best_cycle(road_map):
     Use randomly generated indices for swapping.
     """
     best_ = math.inf
-    hold_ = None
-    itter_ = 100000
-    load_ = ['o....', '.o...', '..o..', '...o.', '....o', '.o...', '..o..', '...o.',]
-
+    itter_ = 10000
+    road_map_best = copy.copy(road_map)
 
     while itter_ != 0:
-        num_ = random.randint(0, len(road_map)-1)
-        num_2 = random.randint(0, len(road_map)-1)
-        shifted_ = shift_cities(road_map)
-        swapped_ = swap_cities(shifted_, num_, num_2)
+        num_ = random.randint(0, len(road_map_best)-1)
+        num_2 = random.randint(0, len(road_map_best)-1)
+        swapped_ = swap_cities(shift_cities(road_map_best), num_, num_2)
 
         if swapped_[1] < best_:
             best_ = swapped_[1]
-            hold_ = copy.copy(swapped_[0]) #does this need to be copy.copy
+            road_map_best = swapped_[0]
         itter_ -= 1
-        road_map = swapped_[0]
 
-        print(load_[0], '\b')
-        print
+    return road_map_best
 
-    spinner = spinning_cursor()
-    for _ in range(50):
-        sys.stdout.write(next(spinner))
-        sys.stdout.flush()
-        time.sleep(0.1)
-        sys.stdout.write('\b')
-
-    return hold_
-
-def spinning_cursor():
-    while True:
-        for cursor in '|/-\\':
-            yield cursor
 
 def print_map(road_map):
     """
@@ -179,7 +162,33 @@ def make_long(i, j): # use this to print in a aethetic format.
 
 def visulisation(road_map):
 
-    pass
+    road_map_rounded = [(j[0], j[1], round(j[2]), round(j[3])) for j in road_map]
+
+    x = []
+    y = []
+
+    for i in road_map:
+        x.append(round(i[2]))
+        y.append(round(i[3]))
+
+    #print('Lat. min: ', min(x))
+    #print('Lat. max: ', max(x))
+    #print('Long min: ', min(y))
+    #rint('Long max: ', max(y))
+
+    for i in range(max(x), min(x)-1, -1): # lat   = +/- 90     = x     = +90 -> -90
+        for j in range(min(y), max(y)+1): # long  = -/+ 180    = y     = -180 -> 180
+            for p, q in enumerate(road_map_rounded):
+                if i == q[2] and j == q[3]:
+                    hold_ =  p + 1#index(q) #the index of road_map list #can i utalise make_long? to make everything 2 digits.
+                    #print(hold_,end='')
+                    break
+                else:
+                    hold_ = '..'
+            print(hold_,  end='')
+        print()
+
+    return
 
 def main():
     """
@@ -196,10 +205,12 @@ def main():
 
     road_map = read_cities(file_name)
     #print_cities(road_map)
-    print_map(road_map)
     #print_cities(find_best_cycle(road_map)) #is this required?
+    print_map(road_map)
     print_map(find_best_cycle(road_map))
     #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
+    visulisation(road_map)
+    visulisation(find_best_cycle(road_map))
 
 if __name__ == "__main__": #keep this in
     main()

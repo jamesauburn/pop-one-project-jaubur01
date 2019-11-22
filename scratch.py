@@ -8,10 +8,6 @@ road_map = [('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 
 #road_map = [('Alabama', 'Montgomery', 32.361538, -86.279118), ('Alaska', 'Juneau', 58.301935, -134.41974), ('Arizona', 'Phoenix', 33.448457, -112.073844), ('Rlabama', 'Bontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118), ('Blabama', 'Rontgomery', 32.361538, -86.279118)]
 #road_map = [('A', 'a', 0, 0), ('B', 'b', 3, 4), ('C', 'c', 0, 0), ('D', 'd', 3, 4)]
 road_map_rounded = [(j[0], j[1], round(j[2]), round(j[3])) for j in road_map]
-print(road_map_rounded)
-
-
-# long  = +- 180    = y     = -180 -> 180
 
 x = []
 y = []
@@ -29,7 +25,7 @@ for i in range(max(x), min(x)-1, -1): # lat   = +/- 90     = x     = +90 -> -90
     for j in range(min(y), max(y)+1): # long  = -/+ 180    = y     = -180 -> 180
         for p, q in enumerate(road_map_rounded):
             if i == q[2] and j == q[3]:
-                hold_ =  p#index(q) #the index of road_map list #can i utalise make_long? to make everything 2 digits.
+                hold_ =  p + 1#index(q) #the index of road_map list #can i utalise make_long? to make everything 2 digits.
                 #print(hold_,end='')
                 break
             else:
