@@ -1,15 +1,19 @@
+
 import tkinter as tk
-from tkinter import filedialog
+#from tkinter import filedialog, Text
 import os
 
+def main():
+    root_ = tk.Tk()
 
-"""
-root_ = tk.Tk()
+    root_.mainloop()
 
-root.mainloop()
+    canvas = root_.Canvas(root, height=400, wdith=400, bg='#26342')
 
-canva = root.Canvas(root, height=400, wdith=400, bg='#26342')
-"""
+
+
+if __name__ == "__main__": #keep this in
+    main()
 
 
 """

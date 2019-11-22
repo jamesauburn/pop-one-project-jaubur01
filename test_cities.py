@@ -20,11 +20,11 @@ def test_compute_total_distance():
     road_map1 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755),\
                 ("Minnesota", "Saint Paul", 44.95, -93.094)]
-    
+
     assert compute_total_distance(road_map1)==\
            pytest.approx(9.386+18.496+10.646, 0.01)
 
-        #using the firgure above test the output fuctions correctly.
+    #using the firgure above test the output fuctions correctly.
     #remenber not to compare floats.
     #assert float(computer_total_distance(???)) = float()
 
@@ -38,16 +38,17 @@ def test_shift_cities():
     road_map3 = [("Minnesota", "Saint Paul", 44.95, -93.094),\
                 ("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755)]
-    
+
     assert road_map3 == shift_cities(road_map2)
 
 def test_compute_total_distance():
     road_map2 = [('a', 'a', 0, 0), ('a', 'a', 3, 4), ('a', 'a', 0, 0), ('a', 'a', 3, 4)]
-    
+
     assert compute_total_distance(road_map2) == 20
 
 def test_pythagoras():
     assert pythagoras(3, 4, 0, 0) == 5
+    assert pythagoras(6, 8, 3, 4) == 5
 """
 include test for all moduals that have been added.
 
@@ -71,7 +72,3 @@ assert Blooean Expression
 !do not try to == with float intergers!
 
 '''
-
-    
-
-

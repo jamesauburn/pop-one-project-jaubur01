@@ -1,4 +1,5 @@
 import math, copy, random
+import sys, time
 
 def read_cities(file_name):
     """
@@ -11,7 +12,7 @@ def read_cities(file_name):
 
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
-    
+
     read_ = open(file_name, 'r').read()
     read_.strip()
     road_map_split = [i.split('\t') for i in read_.split('\n')]
@@ -25,11 +26,11 @@ def print_cities(road_map):
     Prints a list of cities, along with their locations.
     Print only one or two digits after the decimal point.
     """
-    hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
+    hold_ = [(j[0], round(j[2], 1), round(j[3], 1)) for j in road_map]
 
     new_ = 'City\t\t\t| Lat\t| Long\n-----------------------------------------\n' # can this be move to print_cities?
     for i in hold_:
-        new_ += make_long(i[0], 16) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
+        new_ += make_long(i[1], 16) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
 
     return print(new_)
 
@@ -50,7 +51,7 @@ def compute_total_distance(road_map):
         a, b = next_[2], next_[3]
         sum_ += pythagoras(A, B, a, b)
 
-    return sum_ 
+    return sum_
 
 def swap_cities(road_map, index1, index2):
     """
@@ -68,7 +69,7 @@ def swap_cities(road_map, index1, index2):
     new_total_distance = compute_total_distance(road_)
 
     return (road_, new_total_distance) #this needs to be tested (not sure what)
-       
+
 
 def shift_cities(road_map):
     """
@@ -91,7 +92,9 @@ def find_best_cycle(road_map):
     """
     best_ = math.inf
     hold_ = None
-    itter_ = 10000
+    itter_ = 100000
+    load_ = ['o....', '.o...', '..o..', '...o.', '....o', '.o...', '..o..', '...o.',]
+
 
     while itter_ != 0:
         num_ = random.randint(0, len(road_map)-1)
@@ -103,9 +106,24 @@ def find_best_cycle(road_map):
             best_ = swapped_[1]
             hold_ = copy.copy(swapped_[0]) #does this need to be copy.copy
         itter_ -= 1
+        road_map = swapped_[0]
+
+        print(load_[0], '\b')
+        print
+
+    spinner = spinning_cursor()
+    for _ in range(50):
+        sys.stdout.write(next(spinner))
+        sys.stdout.flush()
+        time.sleep(0.1)
+        sys.stdout.write('\b')
 
     return hold_
 
+def spinning_cursor():
+    while True:
+        for cursor in '|/-\\':
+            yield cursor
 
 def print_map(road_map):
     """
@@ -115,7 +133,7 @@ def print_map(road_map):
     """
     #what is the cost? the ditance?
     #can this be in a plot format?
-    print(road_map)
+
     total_ = 0
     div_ = '\n-----------------------------------------------\n'
     new_ = 'City Connection\t\t\t\t| Cost' + div_
@@ -123,7 +141,7 @@ def print_map(road_map):
     for i in range(0, len(road_map)):
         next_ = road_map[(i + 1) % len(road_map)]
         cost_ = pythagoras(road_map[i][2], road_map[i][3], next_[2], next_[3])
-        new_ += make_long(road_map[i][1] + ' -> ' + next_[1], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
+        new_ += make_long(road_map[i][0] + ' -> ' + next_[0], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
         total_ += cost_
     new_ += div_ + 'The total cost is ' + str(round(total_,1 )) + div_
 
@@ -168,20 +186,20 @@ def main():
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
     """
+
     print('Traveling Salesman - James Auburn - 13168179 - PoP Term 1 Project')
     valid_input = False
     while valid_input == False:
-        print('Please enter the name of your file (include file extension): ', end="")
+        print('Please enter the name of your file (include file extension): ', end='')
         file_name = input()
         valid_input = pass_criteria(file_name)
 
     road_map = read_cities(file_name)
-    print_cities(road_map)
+    #print_cities(road_map)
+    print_map(road_map)
     #print_cities(find_best_cycle(road_map)) #is this required?
     print_map(find_best_cycle(road_map))
     #should this be printed in a nice text format. Each city on each line ect. No brackets or tuples brackets.
 
 if __name__ == "__main__": #keep this in
     main()
-
-
