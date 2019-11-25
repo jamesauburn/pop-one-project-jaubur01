@@ -26,7 +26,7 @@ def print_cities(road_map):
     Prints a list of cities, along with their locations.
     Print only one or two digits after the decimal point.
     """
-    hold_ = [(j[0], round(j[2], 1), round(j[3], 1)) for j in road_map] ##!!!!cheange this back to cities, not states
+    hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
 
     new_ = 'City Location\t\t\t| Lat\t| Long\n-----------------------------------------\n' # can this be move to print_cities?
     for i in hold_:
@@ -114,8 +114,6 @@ def print_map(road_map):
     their connections, along with the cost for each connection
     and the total cost.
     """
-    #what is the cost? the ditance?
-    #can this be in a plot format?
 
     total_ = 0
     div_ = '\n-----------------------------------------------\n'
@@ -124,15 +122,12 @@ def print_map(road_map):
     for i in range(0, len(road_map)):
         next_ = road_map[(i + 1) % len(road_map)]
         cost_ = pythagoras(road_map[i][2], road_map[i][3], next_[2], next_[3])
-        new_ += make_long(road_map[i][0] + ' -> ' + next_[0], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
+        new_ += make_long(road_map[i][1] + ' -> ' + next_[1], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
         total_ += cost_
     new_ += div_ + 'The total cost is ' + str(round(total_,1 )) + div_
 
     return print(new_)
-    """
-    print all coordinates on a grip and label accordingly.
-    plot the route prior to the analysis and a plot for after.
-    """
+
 
 def pass_criteria(file_name):
     try:
@@ -154,7 +149,7 @@ def pass_criteria(file_name):
 def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
 
-def make_long(i, j): # use this to print in a aethetic format.
+def make_long(i, j):
     if len(i) > j:
         return i
     else:
@@ -170,7 +165,6 @@ def visulisation(road_map):
         tot_ = 2
     elif len(road_map_rounded) < 10:
         tot_ = 3
-
 
     x = []
     y = []
