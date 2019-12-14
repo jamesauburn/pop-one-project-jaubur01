@@ -1,4 +1,4 @@
-import math, copy, random
+import math, copy, random, sys
 
 
 def read_cities(file_name):
@@ -13,9 +13,9 @@ def read_cities(file_name):
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
 
-    read_ = open(file_name, 'r').read()
-    read_.strip()
-    road_map = [i.split('\t') for i in read_.split('\n')]
+    road_map = open(file_name, 'r').read()
+    road_map.strip()
+    road_map = [i.split('\t') for i in road_map.split('\n')]
     road_map = [(j[0], j[1], float(j[2]), float(j[3])) for j in road_map]
     road_map = [tuple(i) for i in road_map]
 
@@ -157,14 +157,18 @@ def make_long(i, j):
 
 def visulisation(road_map):
 
+    f = open("Best Road Map.txt", 'w')
+    sys.stdout = f
+
     road_map_rounded = [(j[0], j[1], round(j[2]), round(j[3])) for j in road_map]
 
     if len(road_map_rounded) < 10:
         tot_ = 1
-    elif len(road_map_rounded) < 10:
+    elif len(road_map_rounded) < 100:
         tot_ = 2
-    elif len(road_map_rounded) < 10:
+    elif len(road_map_rounded) < 1000:
         tot_ = 3
+
 
     x = []
     y = []
@@ -192,7 +196,9 @@ def visulisation(road_map):
                     hold_ = '__|'
             print(hold_, end='')
         print('__|')
-#city-data.txt
+
+    f.close()
+
     return
 
 def main():
@@ -217,7 +223,6 @@ def main():
     visulisation(road_map)
     visulisation(best_road_map)
 
-    print('|', '\t', '|', '\t','|', '\t','|', '\t')
 
 if __name__ == "__main__": #keep this in
     main()
