@@ -17,7 +17,6 @@ def read_cities(file_name):
     road_map.strip()
     road_map = [i.split('\t') for i in road_map.split('\n')]
     road_map = [(j[0], j[1], float(j[2]), float(j[3])) for j in road_map]
-    road_map = [tuple(i) for i in road_map]
 
     return road_map
 
@@ -64,7 +63,8 @@ def swap_cities(road_map, index1, index2):
     Allow for the possibility that `index1=index2`,
     and handle this case correctly.
     """
-    road_map_swap = copy.copy(road_map) #This copy is necessary
+
+    road_map_swap = copy.copy(road_map)
     road_map_swap[index1], road_map_swap[index2] = road_map_swap[index2], road_map_swap[index1]
     new_total_distance = compute_total_distance(road_map_swap)
 
@@ -77,7 +77,7 @@ def shift_cities(road_map):
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map.
     """
-    #is is neccessary to not return the same variable?
+
     road_map_shift = copy.copy(road_map)
     road_map_shift.insert(0, road_map_shift[-1])
     road_map_shift.pop()
@@ -107,14 +107,12 @@ def find_best_cycle(road_map):
 
     return road_map_best
 
-
 def print_map(road_map):
     """
     Prints, in an easily understandable format, the cities and
     their connections, along with the cost for each connection
     and the total cost.
     """
-
     total_ = 0
     div_ = '\n-----------------------------------------------\n'
     new_ = 'City Connection\t\t\t\t| Cost' + div_
@@ -169,7 +167,6 @@ def visulisation(road_map):
     elif len(road_map_rounded) < 1000:
         tot_ = 3
 
-
     x = []
     y = []
 
@@ -201,6 +198,69 @@ def visulisation(road_map):
 
     return
 
+def visulisation2(road_map):
+
+    f = open("Best Road Map2.txt", 'w')
+    sys.stdout = f
+
+    road_map_rounded = [[j[0], j[1], round(j[2]), round(j[3])] for j in road_map]
+
+    x = []
+    y = []
+
+    for i in road_map_rounded:
+        x.append(round(i[2]))
+        y.append(round(i[3]))
+
+    print('     ', end='')
+    for j in range(min(y), max(y)+1, 2):
+        print(make_long(str(j), 4), end='|')
+    print('\n____|', end='')
+    for j in range(min(y), max(y)+1, 2):
+        print('_^|__|', end='')
+    print('\n', end='')
+
+    for i in range(max(x), min(x)-1, -1):   # lat   = +/- 90     = x     = +90 -> -90
+        print(make_long(str(i), 2), '|', end='')
+        for j in range(min(y), max(y)+1):   # long  = -/+ 180    = y     = -180 -> 180
+            for p, q in enumerate(road_map_rounded):
+                if i == q[2] and j == q[3]:
+                    hold_ = make_long(str(p + 1), 1) + '|'
+                    break
+                else:
+                    hold_ = '__|'
+            print(hold_, end='')
+        print('__|')
+
+    new_ = '\nCity Location\t\t\t| id\n-----------------------------------------\n' # can this be move to print_cities?
+    for p, q in enumerate(road_map_rounded):
+        new_ += make_long(q[1], 24) + '\t| ' + str(p + 1) + '\n'
+
+    print(new_)
+
+    error_ = 'NOTE: The following locations are located n the same point:'
+
+    count_ = 0
+    hold_ = {}
+    for p, q in enumerate(road_map_rounded):
+        count_ = 0
+        for j in road_map_rounded:
+            if q[2] == j[2] and q[3] == j[3]:
+                count_ += 1
+            if count_ >= 2:
+                hold_[p+1] = q[1]
+                print(q[1] + '\t| ' + str(p+1))
+                count_ -= 1
+
+    #match the number in
+    #remeber to add one
+
+    print(hold_)
+
+    f.close()
+
+    return
+
 def main():
     """
     Reads in, and prints out, the city data, then creates the "best"
@@ -220,8 +280,8 @@ def main():
     print_cities(best_road_map)
     print_map(road_map)
     print_map(best_road_map)
-    visulisation(road_map)
     visulisation(best_road_map)
+    visulisation2(best_road_map)
 
 
 if __name__ == "__main__": #keep this in
