@@ -71,12 +71,13 @@ def swap_cities(road_map, index1, index2):
     Allow for the possibility that `index1=index2`,
     and handle this case correctly.
     """
-
-    road_map_swap = copy.copy(road_map)
-    road_map_swap[index1], road_map_swap[index2] = road_map_swap[index2], road_map_swap[index1]
-    new_total_distance = compute_total_distance(road_map_swap)
-
-    return (road_map_swap, new_total_distance) #this needs to be tested (not sure what)
+    try:
+        road_map_swap = copy.copy(road_map)
+        road_map_swap[index1], road_map_swap[index2] = road_map_swap[index2], road_map_swap[index1]
+        new_total_distance = compute_total_distance(road_map_swap)
+        return (road_map_swap, new_total_distance) #this needs to be tested (not sure what)
+    except IndexError as error:
+        return 'Index out of range'
 
 def shift_cities(road_map):
     """

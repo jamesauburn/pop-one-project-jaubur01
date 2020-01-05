@@ -32,12 +32,10 @@ def test_compute_total_distance():
 
     assert compute_total_distance(road_map3) == 0
 
-
-
-
     #using the firgure above test the output fuctions correctly.
     #remenber not to compare floats.
     #assert float(compute_total_distance(???)) = float()
+
 
 def test_swap_cities():
     road_map1 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
@@ -52,7 +50,15 @@ def test_swap_cities():
 
     assert road_map1 == road_map3[0]
 
-    assert swap_cities(road_map1, 0, -1)
+    #with pytest.raises(Exception):
+    #    swap_cities(road_map1, 0, 3)
+
+    #with pytest.raises(Exception):
+    #    swap_cities(road_map1, 0, -4)
+
+    assert swap_cities(road_map1, 0, -4) == 'Index out of range'
+
+    assert swap_cities(road_map1, 0, 3) == 'Index out of range'
 
 
 def test_shift_cities():
@@ -69,11 +75,13 @@ def test_shift_cities():
 
     assert road_map2 != shift_cities(road_map3)
 
+
 def test_pythagoras():
 
     assert pythagoras(3, 4, 0, 0) == 5
 
     assert pythagoras(6, 8, 3, 4) == 5
+
 
 def test_makelong():
     test_ = 'abc'
