@@ -25,6 +25,8 @@ def test_compute_total_distance():
 
     road_map3 = []
 
+    road_map4 = [('a', 'a', 3, 4)]
+
     assert compute_total_distance(road_map1)==\
            pytest.approx(9.386+18.496+10.646, 0.01)
 
@@ -33,6 +35,8 @@ def test_compute_total_distance():
     assert compute_total_distance(road_map2) != 15
 
     assert compute_total_distance(road_map3) == 0
+
+    assert compute_total_distance(road_map4) == 0
 
     #using the firgure above test the output fuctions correctly.
     #remenber not to compare floats.
@@ -48,6 +52,8 @@ def test_swap_cities():
 
     road_map3 = swap_cities(road_map1, 0, 0)
 
+    road_map4 = []
+
     assert road_map1 != road_map2[0]
 
     assert road_map1 == road_map3[0]
@@ -59,6 +65,8 @@ def test_swap_cities():
     #with pytest.raises(Exception):
     #    swap_cities(road_map1, 0, -4)
     assert swap_cities(road_map1, 0, 3) == 'Index out of range'
+
+    assert swap_cities(road_map4, 0, 1) == 'Index out of range'
 
 
 def test_shift_cities():
@@ -95,6 +103,8 @@ def test_pass_criteria():
 
     assert pass_criteria('cities.py') == False
 
+    assert pass_criteria('') == False
+
     assert pass_criteria('city-data.txt') == True
 
 
@@ -129,6 +139,8 @@ def test_makelong():
     test_2 = (1, 2, 3)
 
     assert len(make_long(test_, 5)) == 5
+
+    assert len(make_long(test_, 3)) == 3
 
     assert len(make_long(test_, 1)) == 3
 

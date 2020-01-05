@@ -233,7 +233,7 @@ def main():
     print_cities(road_map)
     best_road_map = find_best_cycle(road_map)
     print_map(best_road_map)
-    vis(best_road_map)
+    #vis(best_road_map)
 
 if __name__ == "__main__": #keep this in
     main()
