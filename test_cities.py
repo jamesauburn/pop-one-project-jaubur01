@@ -29,12 +29,10 @@ def test_compute_total_distance():
            pytest.approx(9.386+18.496+10.646, 0.01)
 
     assert compute_total_distance(road_map2) == 20
+
     assert compute_total_distance(road_map2) != 15
 
     assert compute_total_distance(road_map3) == 0
-
-
-
 
     #using the firgure above test the output fuctions correctly.
     #remenber not to compare floats.
@@ -71,6 +69,7 @@ def test_shift_cities():
     road_map3 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755),\
                 ("Minnesota", "Saint Paul", 44.95, -93.094)]
+
     road_map4 = [("Minnesota", "Saint Paul", 44.95, -93.094),\
                 ("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755)]
@@ -80,7 +79,7 @@ def test_shift_cities():
     assert shift_cities(road_map1) == 'Empty list'
 
     assert road_map2 == shift_cities(road_map2)
-    
+
     assert road_map4 == shift_cities(road_map3)
 
     assert road_map4 != shift_cities(road_map4)
@@ -88,6 +87,15 @@ def test_shift_cities():
     assert road_map3 != shift_cities(road_map3)
 
 
+def test_pass_criteria():
+
+    assert pass_criteria('python.txt') == False
+
+    assert pass_criteria('city-data') == False
+
+    assert pass_criteria('cities.py') == False
+
+    assert pass_criteria('city-data.txt') == True
 
 
 def test_pythagoras():
@@ -115,6 +123,7 @@ def test_pythagoras():
     assert pythagoras(-1, -2, -3, -4)==\
            pytest.approx(2.828427)
 
+
 def test_makelong():
     test_ = 'abc'
     test_2 = (1, 2, 3)
@@ -126,28 +135,3 @@ def test_makelong():
     assert len(make_long(test_, -4)) == 3
 
     assert make_long(test_2, 10) == 'Input invalid'
-
-
-"""
-include test for all moduals that have been added.
-
-def test_main():
-    #DO NOT TEST
-def test_read_cities():
-    #DO NOT TEST
-def test_print_cities():
-    #DO NOT TEST
-def test_print_map():
-    #DO NOT TEST
-def test_find_best_cycle():
-    #DO NOT TEST
-"""
-
-
-'''
-use assert statement
-assert Blooean Expression
-
-!do not try to == with float intergers!
-
-'''

@@ -36,7 +36,7 @@ def print_cities(road_map):
     for i in hold_:
         new_ += make_long(i[0], 24) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
 
-    return print(new_)
+    print(new_)
 
 
 def compute_total_distance(road_map):
@@ -116,6 +116,7 @@ def find_best_cycle(road_map):
 
     return road_map_best
 
+
 def print_map(road_map):
     """
     Prints, in an easily understandable format, the cities and
@@ -129,18 +130,18 @@ def print_map(road_map):
     for i in range(0, len(road_map)):
         next_ = road_map[(i + 1) % len(road_map)]
         cost_ = pythagoras(road_map[i][2], road_map[i][3], next_[2], next_[3])
-        new_ += make_long(road_map[i][1] + ' -> ' + next_[1], 32) + '\t| ' + str(round(cost_, 1)) + '\n' # this cost is wrong. I have done the distance from 0 not from each point.
+        new_ += make_long(road_map[i][1] + ' -> ' + next_[1], 32) + '\t| ' + str(round(cost_, 1)) + '\n'
         total_ += cost_
     new_ += div_ + 'The total cost is ' + str(round(total_,1 )) + div_
 
-    return print(new_)
+    print(new_)
 
 
 def pass_criteria(file_name):
     try:
         read_ = open(file_name, 'r').read()
     except FileNotFoundError:
-        print('This file cannot be found.')
+        print('This file cannot be found. Please ensure it is in the working directory or the file path has been specified.')
         return False
 
     if not file_name.endswith('.txt'):
@@ -156,6 +157,7 @@ def pass_criteria(file_name):
 def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
 
+
 def make_long(i, j):
     try:
         if len(i) > j-1:
@@ -164,6 +166,7 @@ def make_long(i, j):
             return make_long(i + ' ', j)
     except TypeError as error:
         return 'Input invalid'
+
 
 def vis(road_map):
 
@@ -208,13 +211,12 @@ def vis(road_map):
                 print(make_long(q[1], 24) + '| ' + str(p+1))
                 count_ -= 1
     print('-----------------------------')
-    new_ = '\nIndex:' + '\n' + make_long('City', 24) + '| ID\n-----------------------------\n' # can this be move to print_cities?
+    new_ = '\nIndex:' + '\n' + make_long('City', 24) + '| ID\n-----------------------------\n'
     for p, q in enumerate(road_map_rounded):
         new_ += make_long(q[1], 24) + '| ' + str(p + 1) + '\n'
 
     print(new_)
 
-    return
 
 def main():
     """
@@ -222,13 +224,10 @@ def main():
     cycle and prints it out.
     """
 
-    print('\nTraveling Salesman - James Auburn - 13168179 - PoP Term 1 Project')
-    valid_input = False
-    while valid_input == False:
-        print('Please enter the name of your file (include file extension): ', end='')
+    print('\nTraveling Salesman - James Auburn - 13168179 - PoP Term 1 Project\nPlease enter the name of your file (include file extension): ', end='')
+    file_name = input()
+    while pass_criteria(file_name) is False:
         file_name = input()
-        print('\n')
-        valid_input = pass_criteria(file_name)
 
     road_map = read_cities(file_name)
     print_cities(road_map)
