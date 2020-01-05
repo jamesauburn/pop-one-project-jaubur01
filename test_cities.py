@@ -52,12 +52,10 @@ def test_swap_cities():
 
     #with pytest.raises(Exception):
     #    swap_cities(road_map1, 0, 3)
+    assert swap_cities(road_map1, 0, -4) == 'Index out of range'
 
     #with pytest.raises(Exception):
     #    swap_cities(road_map1, 0, -4)
-
-    assert swap_cities(road_map1, 0, -4) == 'Index out of range'
-
     assert swap_cities(road_map1, 0, 3) == 'Index out of range'
 
 
@@ -76,21 +74,44 @@ def test_shift_cities():
     assert road_map2 != shift_cities(road_map3)
 
 
+
+
 def test_pythagoras():
 
     assert pythagoras(3, 4, 0, 0) == 5
 
     assert pythagoras(6, 8, 3, 4) == 5
 
+    assert pythagoras(0, 0, 0, 0) == 0
+
+    assert pythagoras(-3, -4, 0, 0) == 5
+
+    assert pythagoras(-6, -8, -3, -4) == 5
+
+    assert pythagoras(0, 0, 0, 0) == 0
+
+    assert pythagoras(6, 8, -3, -4) == 15
+
+    assert pythagoras(1, 2, 3, 4)==\
+           pytest.approx(2.828427)
+
+    assert pythagoras(-1, -2, 3, 4)==\
+           pytest.approx(7.2111)
+
+    assert pythagoras(-1, -2, -3, -4)==\
+           pytest.approx(2.828427)
 
 def test_makelong():
     test_ = 'abc'
+    test_2 = (1, 2, 3)
 
     assert len(make_long(test_, 5)) == 5
 
     assert len(make_long(test_, 1)) == 3
 
     assert len(make_long(test_, -4)) == 3
+
+    assert make_long(test_2, 10) == 'Input must be a string'
 
 
 """

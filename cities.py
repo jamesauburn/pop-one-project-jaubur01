@@ -156,10 +156,13 @@ def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
 
 def make_long(i, j):
-    if len(i) > j-1:
-        return i
-    else:
-        return make_long(i + ' ', j)
+    try:
+        if len(i) > j-1:
+            return i
+        else:
+            return make_long(i + ' ', j)
+    except TypeError as error:
+        return 'Input must be a string'
 
 def vis(road_map):
 
