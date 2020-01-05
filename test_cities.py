@@ -23,10 +23,16 @@ def test_compute_total_distance():
 
     road_map2 = [('a', 'a', 0, 0), ('a', 'a', 3, 4), ('a', 'a', 0, 0), ('a', 'a', 3, 4)]
 
+    road_map3 = []
+
     assert compute_total_distance(road_map1)==\
            pytest.approx(9.386+18.496+10.646, 0.01)
 
     assert compute_total_distance(road_map2) == 20
+
+    assert compute_total_distance(road_map3) == 0
+
+
 
 
     #using the firgure above test the output fuctions correctly.
@@ -64,7 +70,9 @@ def test_shift_cities():
     assert road_map2 != shift_cities(road_map3)
 
 def test_pythagoras():
+
     assert pythagoras(3, 4, 0, 0) == 5
+
     assert pythagoras(6, 8, 3, 4) == 5
 
 def test_makelong():

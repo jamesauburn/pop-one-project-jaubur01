@@ -45,6 +45,9 @@ def compute_total_distance(road_map):
     the connections in the `road_map`. Remember that it's a cycle, so that
     (for example) in the initial `road_map`, Wyoming connects to Alabama...
     """
+    if len(road_map) == 0:
+        return 0
+
     a = road_map[0][2]
     b = road_map[0][3]
     sum_ = 0
@@ -206,7 +209,7 @@ def vis(road_map):
 
     print(new_)
 
-    #return
+    return
 
 def main():
     """
@@ -227,7 +230,6 @@ def main():
     best_road_map = find_best_cycle(road_map)
     print_map(best_road_map)
     vis(best_road_map)
-
 
 if __name__ == "__main__": #keep this in
     main()
