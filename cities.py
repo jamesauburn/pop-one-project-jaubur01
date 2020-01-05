@@ -100,17 +100,19 @@ def find_best_cycle(road_map):
     Use randomly generated indices for swapping.
     """
     best_ = math.inf
-    itter_ = 10000
+    itter_ = 100000
     road_map_best = copy.copy(road_map)
 
     while itter_ != 0:
-        num_ =  random.randint(0, len(road_map_best)-1)
-        num_2 = random.randint(0, len(road_map_best)-1)
-        swapped_ = swap_cities(shift_cities(road_map_best), num_, num_2)
+        num_ =  random.randint(0, len(road_map_best)/2)
+        num_2 = random.randint(len(road_map_best)/2, len(road_map_best)-1)
+        swapped_ = swap_cities(road_map_best, num_, num_2)
 
         if swapped_[1] < best_:
             best_ = swapped_[1]
             road_map_best = swapped_[0]
+            print(swapped_[1])
+        road_map_best = shift_cities(road_map_best)
         itter_ -= 1
 
     return road_map_best
