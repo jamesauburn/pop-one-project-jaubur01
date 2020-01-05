@@ -17,7 +17,6 @@ def read_cities(file_name):
 
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
-
     road_map = open(file_name, 'r').read()
     road_map.strip()
     road_map = [i.split('\t') for i in road_map.split('\n')]
@@ -75,7 +74,7 @@ def swap_cities(road_map, index1, index2):
         road_map_swap = copy.copy(road_map)
         road_map_swap[index1], road_map_swap[index2] = road_map_swap[index2], road_map_swap[index1]
         new_total_distance = compute_total_distance(road_map_swap)
-        return (road_map_swap, new_total_distance) #this needs to be tested (not sure what)
+        return (road_map_swap, new_total_distance)
     except IndexError as error:
         return 'Index out of range'
 
@@ -233,7 +232,7 @@ def main():
     print_cities(road_map)
     best_road_map = find_best_cycle(road_map)
     print_map(best_road_map)
-    #vis(best_road_map)
+    vis(best_road_map)
 
 if __name__ == "__main__": #keep this in
     main()
