@@ -29,8 +29,12 @@ def test_compute_total_distance():
            pytest.approx(9.386+18.496+10.646, 0.01)
 
     assert compute_total_distance(road_map2) == 20
+    assert compute_total_distance(road_map2) != 15
 
     assert compute_total_distance(road_map3) == 0
+
+
+
 
     #using the firgure above test the output fuctions correctly.
     #remenber not to compare floats.
@@ -60,18 +64,28 @@ def test_swap_cities():
 
 
 def test_shift_cities():
-    road_map2 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
+    road_map1 = []
+
+    road_map2 = [("Kentucky", "Frankfort", 38.197274, -84.86311)]
+
+    road_map3 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755),\
                 ("Minnesota", "Saint Paul", 44.95, -93.094)]
-    road_map3 = [("Minnesota", "Saint Paul", 44.95, -93.094),\
+    road_map4 = [("Minnesota", "Saint Paul", 44.95, -93.094),\
                 ("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755)]
 
-    assert road_map3 == shift_cities(road_map2)
+    #with pytest.raises(Exception):
+    #    shift_cities(road_map1)
+    assert shift_cities(road_map1) == 'Empty list'
+
+    assert road_map2 == shift_cities(road_map2)
+    
+    assert road_map4 == shift_cities(road_map3)
+
+    assert road_map4 != shift_cities(road_map4)
 
     assert road_map3 != shift_cities(road_map3)
-
-    assert road_map2 != shift_cities(road_map3)
 
 
 
@@ -111,7 +125,7 @@ def test_makelong():
 
     assert len(make_long(test_, -4)) == 3
 
-    assert make_long(test_2, 10) == 'Input must be a string'
+    assert make_long(test_2, 10) == 'Input invalid'
 
 
 """

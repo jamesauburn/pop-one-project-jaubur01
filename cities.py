@@ -85,12 +85,13 @@ def shift_cities(road_map):
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map.
     """
-
-    road_map_shift = copy.copy(road_map)
-    road_map_shift.insert(0, road_map_shift[-1])
-    road_map_shift.pop()
-
-    return road_map_shift
+    try:
+        road_map_shift = copy.copy(road_map)
+        road_map_shift.insert(0, road_map_shift[-1])
+        road_map_shift.pop()
+        return road_map_shift
+    except IndexError as error:
+        return 'Empty list'
 
 def find_best_cycle(road_map):
     """
@@ -162,7 +163,7 @@ def make_long(i, j):
         else:
             return make_long(i + ' ', j)
     except TypeError as error:
-        return 'Input must be a string'
+        return 'Input invalid'
 
 def vis(road_map):
 
