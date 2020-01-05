@@ -21,20 +21,33 @@ def test_compute_total_distance():
                 ("Delaware", "Dover", 39.161921, -75.526755),\
                 ("Minnesota", "Saint Paul", 44.95, -93.094)]
 
+    road_map2 = [('a', 'a', 0, 0), ('a', 'a', 3, 4), ('a', 'a', 0, 0), ('a', 'a', 3, 4)]
+
     assert compute_total_distance(road_map1)==\
            pytest.approx(9.386+18.496+10.646, 0.01)
 
+    assert compute_total_distance(road_map2) == 20
+
+
     #using the firgure above test the output fuctions correctly.
     #remenber not to compare floats.
-    #assert float(computer_total_distance(???)) = float()
+    #assert float(compute_total_distance(???)) = float()
 
 def test_swap_cities():
     road_map1 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
                 ("Delaware", "Dover", 39.161921, -75.526755),\
                 ("Minnesota", "Saint Paul", 44.95, -93.094)]
-    assert road_map1 != swap_cities(road_map1, 0, 1)
 
-    pass
+    road_map2 = swap_cities(road_map1, 0, 1)
+
+    road_map3 = swap_cities(road_map1, 0, 0)
+
+    assert road_map1 != road_map2[0]
+
+    assert road_map1 == road_map3[0]
+
+    assert swap_cities(road_map1, 0, -1)
+
 
 def test_shift_cities():
     road_map2 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
@@ -46,14 +59,24 @@ def test_shift_cities():
 
     assert road_map3 == shift_cities(road_map2)
 
-def test_compute_total_distance():
-    road_map2 = [('a', 'a', 0, 0), ('a', 'a', 3, 4), ('a', 'a', 0, 0), ('a', 'a', 3, 4)]
+    assert road_map3 != shift_cities(road_map3)
 
-    assert compute_total_distance(road_map2) == 20
+    assert road_map2 != shift_cities(road_map3)
 
 def test_pythagoras():
     assert pythagoras(3, 4, 0, 0) == 5
     assert pythagoras(6, 8, 3, 4) == 5
+
+def test_makelong():
+    test_ = 'abc'
+
+    assert len(make_long(test_, 5)) == 5
+
+    assert len(make_long(test_, 1)) == 3
+
+    assert len(make_long(test_, -4)) == 3
+
+
 """
 include test for all moduals that have been added.
 

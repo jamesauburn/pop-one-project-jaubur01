@@ -1,4 +1,9 @@
-import math, copy, random, sys
+import math
+import copy
+import random
+import sys
+import os
+import subprocess
 
 
 def read_cities(file_name):
@@ -27,7 +32,7 @@ def print_cities(road_map):
     """
     hold_ = [(j[1], round(j[2], 1), round(j[3], 1)) for j in road_map]
 
-    new_ = 'City Location\t\t\t| Lat\t| Long\n-----------------------------------------\n' # can this be move to print_cities?
+    new_ = 'City Location\t\t\t| Lat\t| Long\n-----------------------------------------\n'
     for i in hold_:
         new_ += make_long(i[0], 24) + '\t| ' + str(i[1]) + '\t| ' + str(i[2]) + '\n'
 
@@ -70,7 +75,6 @@ def swap_cities(road_map, index1, index2):
 
     return (road_map_swap, new_total_distance) #this needs to be tested (not sure what)
 
-
 def shift_cities(road_map):
     """
     For every index i in the `road_map`, the city at the position i moves
@@ -96,7 +100,7 @@ def find_best_cycle(road_map):
     road_map_best = copy.copy(road_map)
 
     while itter_ != 0:
-        num_ = random.randint(0, len(road_map_best)-1)
+        num_ =  random.randint(0, len(road_map_best)-1)
         num_2 = random.randint(0, len(road_map_best)-1)
         swapped_ = swap_cities(shift_cities(road_map_best), num_, num_2)
 
@@ -148,60 +152,12 @@ def pythagoras(A, B, a, b):
     return math.sqrt(((A - a) ** 2) + ((B - b) ** 2))
 
 def make_long(i, j):
-    if len(i) > j:
+    if len(i) > j-1:
         return i
     else:
         return make_long(i + ' ', j)
 
-def visulisation(road_map):
-
-    f = open("Best Road Map.txt", 'w')
-    sys.stdout = f
-
-    road_map_rounded = [(j[0], j[1], round(j[2]), round(j[3])) for j in road_map]
-
-    if len(road_map_rounded) < 10:
-        tot_ = 1
-    elif len(road_map_rounded) < 100:
-        tot_ = 2
-    elif len(road_map_rounded) < 1000:
-        tot_ = 3
-
-    x = []
-    y = []
-
-    for i in road_map:
-        x.append(round(i[2]))
-        y.append(round(i[3]))
-
-    print('     ', end='')
-    for j in range(min(y), max(y)+1, 2):
-        print(make_long(str(j), 4), end='|')
-    print('\n____|', end='')
-    for j in range(min(y), max(y)+1, 2):
-        print('_^|__|', end='')
-    print('\n', end='')
-
-    for i in range(max(x), min(x)-1, -1):   # lat   = +/- 90     = x     = +90 -> -90
-        print(make_long(str(i), 2), '|', end='')
-        for j in range(min(y), max(y)+1):   # long  = -/+ 180    = y     = -180 -> 180
-            for p, q in enumerate(road_map_rounded):
-                if i == q[2] and j == q[3]:
-                    hold_ = make_long(str(p + 1), 1) + '|'
-                    break
-                else:
-                    hold_ = '__|'
-            print(hold_, end='')
-        print('__|')
-
-    f.close()
-
-    return
-
-def visulisation2(road_map):
-
-    f = open("Best Road Map2.txt", 'w')
-    sys.stdout = f
+def vis(road_map):
 
     road_map_rounded = [[j[0], j[1], round(j[2]), round(j[3])] for j in road_map]
 
@@ -212,10 +168,10 @@ def visulisation2(road_map):
         x.append(round(i[2]))
         y.append(round(i[3]))
 
-    print('     ', end='')
+    print('    ', end='')
     for j in range(min(y), max(y)+1, 2):
-        print(make_long(str(j), 4), end='|')
-    print('\n____|', end='')
+        print(make_long(str(j), 5), end='|')
+    print('\n___|', end='')
     for j in range(min(y), max(y)+1, 2):
         print('_^|__|', end='')
     print('\n', end='')
@@ -225,41 +181,32 @@ def visulisation2(road_map):
         for j in range(min(y), max(y)+1):   # long  = -/+ 180    = y     = -180 -> 180
             for p, q in enumerate(road_map_rounded):
                 if i == q[2] and j == q[3]:
-                    hold_ = make_long(str(p + 1), 1) + '|'
+                    hold_ = make_long(str(p + 1), 2) + '|'
                     break
                 else:
                     hold_ = '__|'
             print(hold_, end='')
         print('__|')
 
-    new_ = '\nCity Location\t\t\t| id\n-----------------------------------------\n' # can this be move to print_cities?
-    for p, q in enumerate(road_map_rounded):
-        new_ += make_long(q[1], 24) + '\t| ' + str(p + 1) + '\n'
-
-    print(new_)
-
-    error_ = 'NOTE: The following locations are located n the same point:'
+    print('\nNOTE: The following locations are located at the same ID due to their close proximity:')
 
     count_ = 0
-    hold_ = {}
     for p, q in enumerate(road_map_rounded):
         count_ = 0
         for j in road_map_rounded:
             if q[2] == j[2] and q[3] == j[3]:
                 count_ += 1
             if count_ >= 2:
-                hold_[p+1] = q[1]
-                print(q[1] + '\t| ' + str(p+1))
+                print(make_long(q[1], 24) + '| ' + str(p+1))
                 count_ -= 1
+    print('-----------------------------')
+    new_ = '\nIndex:' + '\n' + make_long('City', 24) + '| ID\n-----------------------------\n' # can this be move to print_cities?
+    for p, q in enumerate(road_map_rounded):
+        new_ += make_long(q[1], 24) + '| ' + str(p + 1) + '\n'
 
-    #match the number in
-    #remeber to add one
+    print(new_)
 
-    print(hold_)
-
-    f.close()
-
-    return
+    #return
 
 def main():
     """
@@ -267,21 +214,19 @@ def main():
     cycle and prints it out.
     """
 
-    print('Traveling Salesman - James Auburn - 13168179 - PoP Term 1 Project')
+    print('\nTraveling Salesman - James Auburn - 13168179 - PoP Term 1 Project')
     valid_input = False
     while valid_input == False:
         print('Please enter the name of your file (include file extension): ', end='')
         file_name = input()
+        print('\n')
         valid_input = pass_criteria(file_name)
 
     road_map = read_cities(file_name)
-    best_road_map = find_best_cycle(road_map)
     print_cities(road_map)
-    print_cities(best_road_map)
-    print_map(road_map)
+    best_road_map = find_best_cycle(road_map)
     print_map(best_road_map)
-    visulisation(best_road_map)
-    visulisation2(best_road_map)
+    vis(best_road_map)
 
 
 if __name__ == "__main__": #keep this in
